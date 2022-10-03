@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c348f4104959148a01924aabdff3ee, type: 3}
   m_Name: Test
   m_EditorClassIdentifier: 
-  requestSender: TEST
-  requestObject: TEST
-  requestContent: TEST
+  requestSender: Test Sender
+  requestObject: Test Object
+  requestContent: Test Content
   timeWindow: 0
-  correctAnswers: []
+  correctAnswers:
+  - Correct Answer
+  - Right Answer
   playerAnswer: 
