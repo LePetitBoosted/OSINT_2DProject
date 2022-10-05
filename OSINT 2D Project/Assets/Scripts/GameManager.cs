@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public MailManager mailManager;
+    public MessageManager messageManager;
 
     public Request[] requests;
 
@@ -18,6 +19,11 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R)) 
         {
             mailManager.ReceiveMail(requests[0]);
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            messageManager.ReceiveMessage(requests[0]);
         }
     }
 }

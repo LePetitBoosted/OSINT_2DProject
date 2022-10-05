@@ -9,7 +9,7 @@ public class SendButton : MonoBehaviour
     public TMP_InputField inputField;
     public bool isMailButton;
     public MailManager mailManager;
-    //public MessageManager messagerManager; 
+    public MessageManager messageManager; 
 
     public void Send() 
     {
@@ -21,10 +21,10 @@ public class SendButton : MonoBehaviour
                 mailManager.CheckAnswer(inputField.text);
             }
 
-            /*else if (!isMailButton && messageManager != null) 
+            else if (!isMailButton && messageManager != null) 
             {
                 messageManager.CheckAnswer(inputField.text);
-            }*/
+            }
 
             inputField.interactable = false;
             GetComponent<Button>().interactable = false;

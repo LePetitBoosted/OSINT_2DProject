@@ -11,7 +11,7 @@ public class MailManager : MonoBehaviour
     public Transform mailPreviewsParent;
     List<GameObject> mailPreviews = new List<GameObject>();
 
-    public GameObject currentMailTParent;
+    public GameObject currentMailtParent;
     public TMP_Text currentSender;
     public TMP_Text currentObject;
     public TMP_Text currentContent;
@@ -37,7 +37,7 @@ public class MailManager : MonoBehaviour
         mailPreviewsParent.GetComponent<RectTransform>().sizeDelta = new Vector2(mailPreviewsParent.GetComponent<RectTransform>().sizeDelta.x, mailPreviewsParent.GetComponent<RectTransform>().sizeDelta.y + 205f);
 
         GameObject newMailPreview = Instantiate(mailPreviewPrefab, mailPreviewsParent);
-        newMailPreview.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
+        newMailPreview.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -5, 0);
         mailPreviews.Add(newMailPreview);
 
         newMailPreview.GetComponent<Mail>().request = request;
@@ -46,9 +46,9 @@ public class MailManager : MonoBehaviour
 
     public void SetCurrentMail(Mail mail) 
     {
-        if (!currentMailTParent.activeSelf) 
+        if (!currentMailtParent.activeSelf) 
         {
-            currentMailTParent.SetActive(true);
+            currentMailtParent.SetActive(true);
         }
 
         //Reset previous current mail color
@@ -141,6 +141,7 @@ public class MailManager : MonoBehaviour
             }
         }
     }
+
     string FormatString(string stringToFormat)
     {
         string newString = stringToFormat.Replace(" ", "");
