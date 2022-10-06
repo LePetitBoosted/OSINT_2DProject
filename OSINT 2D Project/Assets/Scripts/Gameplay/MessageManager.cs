@@ -20,7 +20,28 @@ public class MessageManager : MonoBehaviour
 
     public void ReceiveMessage(Request request) 
     {
-      
+        unreadConversationCount++;
+        UpdateUnread();
+
+        if (newConversation()) 
+        {
+            foreach (GameObject mailPreview in mailPreviews)
+            {
+                Vector3 newPosition = new Vector3(0, mailPreview.GetComponent<RectTransform>().anchoredPosition.y - 205f, 0);
+                mailPreview.GetComponent<RectTransform>().anchoredPosition = newPosition;
+            }
+
+            mailPreviewsParent.GetComponent<RectTransform>().sizeDelta = new Vector2(mailPreviewsParent.GetComponent<RectTransform>().sizeDelta.x, mailPreviewsParent.GetComponent<RectTransform>().sizeDelta.y + 205f);
+
+            GameObject newMailPreview = Instantiate(mailPreviewPrefab, mailPreviewsParent);
+            newMailPreview.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -5, 0);
+            mailPreviews.Add(newMailPreview);
+        }
+
+
+
+        newMailPreview.GetComponent<Mail>().request = request;
+        newMailPreview.name = request.name;
     }
 
     public void SetCurrentConversation(Conversation conversation) 
@@ -100,5 +121,10 @@ public class MessageManager : MonoBehaviour
         newString = newString.ToLower();
 
         return newString;
+    }
+
+    bool newConversation() 
+    {
+        return false;
     }
 }
