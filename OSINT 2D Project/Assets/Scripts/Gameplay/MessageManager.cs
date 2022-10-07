@@ -23,25 +23,23 @@ public class MessageManager : MonoBehaviour
         unreadConversationCount++;
         UpdateUnread();
 
-        if (newConversation()) 
-        {
-            foreach (GameObject mailPreview in mailPreviews)
+        if (newConversation())
+        { 
+            foreach (GameObject conversationPreview in conversationPreviews)
             {
-                Vector3 newPosition = new Vector3(0, mailPreview.GetComponent<RectTransform>().anchoredPosition.y - 205f, 0);
-                mailPreview.GetComponent<RectTransform>().anchoredPosition = newPosition;
+                Vector3 newPosition = new Vector3(0, conversationPreview.GetComponent<RectTransform>().anchoredPosition.y - 205f, 0);
+                conversationPreview.GetComponent<RectTransform>().anchoredPosition = newPosition;
             }
 
-            mailPreviewsParent.GetComponent<RectTransform>().sizeDelta = new Vector2(mailPreviewsParent.GetComponent<RectTransform>().sizeDelta.x, mailPreviewsParent.GetComponent<RectTransform>().sizeDelta.y + 205f);
+            conversationPreviewsParent.GetComponent<RectTransform>().sizeDelta = new Vector2(conversationPreviewsParent.GetComponent<RectTransform>().sizeDelta.x, conversationPreviewsParent.GetComponent<RectTransform>().sizeDelta.y + 205f);
 
-            GameObject newMailPreview = Instantiate(mailPreviewPrefab, mailPreviewsParent);
+            GameObject newMailPreview = Instantiate(conversationPreviewPrefab, conversationPreviewsParent);
             newMailPreview.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -5, 0);
-            mailPreviews.Add(newMailPreview);
+            conversationPreviews.Add(newMailPreview);
+            newMailPreview.name = request.requestSender;
         }
 
-
-
-        newMailPreview.GetComponent<Mail>().request = request;
-        newMailPreview.name = request.name;
+        //newMailPreview.GetComponent<Mail>().request = request;
     }
 
     public void SetCurrentConversation(Conversation conversation) 
