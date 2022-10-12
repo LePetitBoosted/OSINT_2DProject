@@ -23,7 +23,7 @@ public class MessageManager : MonoBehaviour
         unreadConversationCount++;
         UpdateUnread();
 
-        if (newConversation())
+        if (newConversation(request))
         { 
             foreach (GameObject conversationPreview in conversationPreviews)
             {
@@ -33,13 +33,20 @@ public class MessageManager : MonoBehaviour
 
             conversationPreviewsParent.GetComponent<RectTransform>().sizeDelta = new Vector2(conversationPreviewsParent.GetComponent<RectTransform>().sizeDelta.x, conversationPreviewsParent.GetComponent<RectTransform>().sizeDelta.y + 205f);
 
-            GameObject newMailPreview = Instantiate(conversationPreviewPrefab, conversationPreviewsParent);
-            newMailPreview.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -5, 0);
-            conversationPreviews.Add(newMailPreview);
-            newMailPreview.name = request.requestSender;
+            GameObject newConversationPreview = Instantiate(conversationPreviewPrefab, conversationPreviewsParent);
+            newConversationPreview.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -5, 0);
+            conversationPreviews.Add(newConversationPreview);
+            newConversationPreview.name = request.requestSender;
         }
 
-        //newMailPreview.GetComponent<Mail>().request = request;
+        foreach (GameObject conversationPreview in conversationPreviews) 
+        {
+            if (conversationPreview.name == request.requestSender) 
+            {
+                conversationPreview.GetComponent<Conversation>().AddRequest(request);
+                break;
+            }
+        }
     }
 
     public void SetCurrentConversation(Conversation conversation) 
@@ -121,8 +128,15 @@ public class MessageManager : MonoBehaviour
         return newString;
     }
 
-    bool newConversation() 
+    bool newConversation(Request request) 
     {
-        return false;
+        foreach (GameObject conversationPreview in conversationPreviews)
+        {
+            if (conversationPreview.name == request.requestSender)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

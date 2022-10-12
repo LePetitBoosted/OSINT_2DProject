@@ -51,6 +51,12 @@ public class Conversation : MonoBehaviour
         messageManager.SetCurrentConversation(this);
     }
 
+    public void AddRequest(Request newRequest) 
+    {
+        requests.Add(newRequest);
+        lastRequest = newRequest;
+    }
+
     public void AnsweredCorrectly()
     {
         Debug.LogError("Correct!");
