@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Sirenix.OdinInspector;
 public class Conversation : MonoBehaviour
 {
     MessageManager messageManager;
@@ -11,21 +12,25 @@ public class Conversation : MonoBehaviour
     public TMP_Text previewTimeText;
     public TMP_Text previewContentText;
 
-    public GameObject conversationPannel;
+    [ReadOnly] public GameObject conversationPannel;
+    public GameObject convsersationPannelPrefab;
+    Transform conversationPannelParent;
 
     public GameObject messagePrefab;
+    Transform messageParent;
 
     List<Request> requests = new List<Request>();
-    public Request lastRequest;
+    [ReadOnly] public Request lastRequest;
 
     bool read = false;
-    public bool answered = false;
+    [ReadOnly] public bool answered = false;
 
     private void Start()
     {
-        SetPreviewText();
-
         messageManager = FindObjectOfType<MessageManager>().GetComponent<MessageManager>();
+
+        SetPreviewText();
+        CreateConversationPannel();
     }
 
     private void SetPreviewText()
@@ -33,6 +38,15 @@ public class Conversation : MonoBehaviour
         previewSenderText.text = lastRequest.requestSender;
         previewTimeText.text = lastRequest.timeWindow.ToString(); //Need conversion
         previewContentText.text = lastRequest.requestContent;
+    }
+
+    private void CreateConversationPannel() 
+    {
+        conversationPannelParent = transform.parent.parent.parent.parent.Find("ConversationPannels"); //So dirty
+        conversationPannel = Instantiate(convsersationPannelPrefab, conversationPannelParent);
+        conversationPannel.name = lastRequest.requestSender + " Pannel";
+
+        messageParent = conversationPannel.transform.Find("Content"); //Dirty
     }
 
     public void MakeCurrentConversation()
@@ -55,6 +69,8 @@ public class Conversation : MonoBehaviour
     {
         requests.Add(newRequest);
         lastRequest = newRequest;
+
+        //GameObject newMessage = Instantiate(messagePrefab, messageParent); WIIP
     }
 
     public void AnsweredCorrectly()

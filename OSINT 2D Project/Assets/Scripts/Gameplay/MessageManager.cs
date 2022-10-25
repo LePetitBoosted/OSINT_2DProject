@@ -51,7 +51,7 @@ public class MessageManager : MonoBehaviour
 
     public void SetCurrentConversation(Conversation conversation) 
     {
-        if (currentConversation.conversationPannel != null) 
+        if (currentConversation != null) 
         {
             currentConversation.conversationPannel.SetActive(false);
         }

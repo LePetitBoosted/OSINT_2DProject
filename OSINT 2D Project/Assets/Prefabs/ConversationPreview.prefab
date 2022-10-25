@@ -95,9 +95,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Mail, Assembly-CSharp
-        m_MethodName: MakeCurrentMail
+      - m_Target: {fileID: -6352678814835384450}
+        m_TargetAssemblyTypeName: Conversation, Assembly-CSharp
+        m_MethodName: MakeCurrentConversation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -123,6 +123,7 @@ MonoBehaviour:
   previewTimeText: {fileID: 8264407105676100171}
   previewContentText: {fileID: 8264407106097217720}
   conversationPannel: {fileID: 0}
+  convsersationPannelPrefab: {fileID: 8259817174359733044, guid: e9d13145da8c41647982f5619ffd772a, type: 3}
   messagePrefab: {fileID: 0}
   lastRequest: {fileID: 0}
   answered: 0
