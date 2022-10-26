@@ -124,7 +124,7 @@ MonoBehaviour:
   previewContentText: {fileID: 8264407106097217720}
   conversationPannel: {fileID: 0}
   convsersationPannelPrefab: {fileID: 8259817174359733044, guid: e9d13145da8c41647982f5619ffd772a, type: 3}
-  messagePrefab: {fileID: 0}
+  messagePrefab: {fileID: 8264407104635069682, guid: c6d09f0cf2e4b3242a1d4647a33ba5e2, type: 3}
   lastRequest: {fileID: 0}
   answered: 0
 --- !u!1 &8264407105676100169

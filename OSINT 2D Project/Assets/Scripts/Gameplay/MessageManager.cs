@@ -11,8 +11,6 @@ public class MessageManager : MonoBehaviour
     public Transform conversationPreviewsParent;
     List<GameObject> conversationPreviews = new List<GameObject>();
 
-    public GameObject conversationPrefab;
-
     public int unreadConversationCount;
     public GameObject[] notifications;
 
@@ -37,6 +35,8 @@ public class MessageManager : MonoBehaviour
             newConversationPreview.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -5, 0);
             conversationPreviews.Add(newConversationPreview);
             newConversationPreview.name = request.requestSender;
+
+            newConversationPreview.GetComponent<Conversation>().CreateConversationPannel();
         }
 
         foreach (GameObject conversationPreview in conversationPreviews) 
@@ -54,10 +54,30 @@ public class MessageManager : MonoBehaviour
         if (currentConversation != null) 
         {
             currentConversation.conversationPannel.SetActive(false);
+
+            if (currentConversation.answered) currentConversation.gameObject.GetComponentInChildren<Image>().color = new Color(0.8f, 0.8f, 0.8f, 1f);
+            else currentConversation.gameObject.GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1f);
         }
 
         conversation.conversationPannel.SetActive(true);
         currentConversation = conversation;
+
+        currentConversation.gameObject.GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0.8f);
+
+        if (currentConversation.answered)
+        {
+            currentConversation.conversationPannel.GetComponentInChildren<TMP_InputField>().interactable = false;
+            currentConversation.conversationPannel.GetComponentInChildren<TMP_InputField>().text = conversation.lastRequest.playerAnswer;
+            currentConversation.conversationPannel.GetComponentInChildren<Button>().interactable = false;
+            currentConversation.conversationPannel.GetComponentInChildren<Button>().gameObject.GetComponentInChildren<TMP_Text>().text = "Sent";
+        }
+        else
+        {
+            currentConversation.conversationPannel.GetComponentInChildren<TMP_InputField>().interactable = true;
+            currentConversation.conversationPannel.GetComponentInChildren<TMP_InputField>().text = "";
+            currentConversation.conversationPannel.GetComponentInChildren<Button>().interactable = true;
+            currentConversation.conversationPannel.GetComponentInChildren<Button>().gameObject.GetComponentInChildren<TMP_Text>().text = "Send";
+        }
     }
 
     public void CheckAnswer(string playerAnswer) 

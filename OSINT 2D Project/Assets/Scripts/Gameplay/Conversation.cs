@@ -16,6 +16,7 @@ public class Conversation : MonoBehaviour
     public GameObject convsersationPannelPrefab;
     Transform conversationPannelParent;
 
+    List<GameObject> messages = new List<GameObject>();
     public GameObject messagePrefab;
     Transform messageParent;
 
@@ -28,9 +29,6 @@ public class Conversation : MonoBehaviour
     private void Start()
     {
         messageManager = FindObjectOfType<MessageManager>().GetComponent<MessageManager>();
-
-        SetPreviewText();
-        CreateConversationPannel();
     }
 
     private void SetPreviewText()
@@ -40,13 +38,13 @@ public class Conversation : MonoBehaviour
         previewContentText.text = lastRequest.requestContent;
     }
 
-    private void CreateConversationPannel() 
+    public void CreateConversationPannel() 
     {
         conversationPannelParent = transform.parent.parent.parent.parent.Find("ConversationPannels"); //So dirty
         conversationPannel = Instantiate(convsersationPannelPrefab, conversationPannelParent);
-        conversationPannel.name = lastRequest.requestSender + " Pannel";
+        conversationPannel.name = gameObject.name + " Pannel";
 
-        messageParent = conversationPannel.transform.Find("Content"); //Dirty
+        messageParent = conversationPannel.transform.Find("Conversation Scroll View/Viewport/Content"); //Dirty
     }
 
     public void MakeCurrentConversation()
@@ -70,7 +68,23 @@ public class Conversation : MonoBehaviour
         requests.Add(newRequest);
         lastRequest = newRequest;
 
-        //GameObject newMessage = Instantiate(messagePrefab, messageParent); WIIP
+        SetPreviewText();
+
+        foreach (GameObject message in messages)
+        {
+            Vector3 newPosition = new Vector3(message.GetComponent<RectTransform>().anchoredPosition.x, message.GetComponent<RectTransform>().anchoredPosition.y + 205f, 0);
+            message.GetComponent<RectTransform>().anchoredPosition = newPosition;
+        }
+
+        messageParent.GetComponent<RectTransform>().sizeDelta = new Vector2(messageParent.GetComponent<RectTransform>().sizeDelta.x, messageParent.GetComponent<RectTransform>().sizeDelta.y + 205f);
+
+        GameObject newMessage = Instantiate(messagePrefab, messageParent);
+        newMessage.GetComponent<RectTransform>().anchoredPosition = new Vector3(350, 0, 0);
+        messages.Add(newMessage);
+
+        newMessage.GetComponentInChildren<TMP_Text>().text = newRequest.requestContent;
+
+        //Reset InputField & Button
     }
 
     public void AnsweredCorrectly()

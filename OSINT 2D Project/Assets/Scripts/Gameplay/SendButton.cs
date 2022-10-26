@@ -9,7 +9,15 @@ public class SendButton : MonoBehaviour
     public TMP_InputField inputField;
     public bool isMailButton;
     public MailManager mailManager;
-    public MessageManager messageManager; 
+    public MessageManager messageManager;
+
+    private void Start()
+    {
+        if (!isMailButton) 
+        {
+            messageManager = FindObjectOfType<MessageManager>().GetComponent<MessageManager>();
+        }
+    }
 
     public void Send() 
     {

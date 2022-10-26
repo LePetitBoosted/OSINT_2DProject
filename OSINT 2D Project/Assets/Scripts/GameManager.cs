@@ -25,5 +25,15 @@ public class GameManager : MonoBehaviour
         {
             messageManager.ReceiveMessage(requests[0]);
         }
+
+        if (Input.GetKeyDown(KeyCode.Y)) 
+        {
+            messageManager.ReceiveMessage(requests[1]);
+        }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            messageManager.ReceiveMessage(requests[2]);
+        }
     }
 }
