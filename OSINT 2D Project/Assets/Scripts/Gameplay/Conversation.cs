@@ -84,7 +84,27 @@ public class Conversation : MonoBehaviour
 
         newMessage.GetComponentInChildren<TMP_Text>().text = newRequest.requestContent;
 
-        //Reset InputField & Button
+        conversationPannel.GetComponentInChildren<TMP_InputField>().interactable = true;
+        conversationPannel.GetComponentInChildren<TMP_InputField>().text = "";
+        conversationPannel.GetComponentInChildren<Button>().interactable = true;
+        conversationPannel.GetComponentInChildren<Button>().gameObject.GetComponentInChildren<TMP_Text>().text = "Send";
+    }
+
+    public void AddPlayerMessage(string messageContent) 
+    {
+        foreach (GameObject message in messages)
+        {
+            Vector3 newPosition = new Vector3(message.GetComponent<RectTransform>().anchoredPosition.x, message.GetComponent<RectTransform>().anchoredPosition.y + 205f, 0);
+            message.GetComponent<RectTransform>().anchoredPosition = newPosition;
+        }
+
+        messageParent.GetComponent<RectTransform>().sizeDelta = new Vector2(messageParent.GetComponent<RectTransform>().sizeDelta.x, messageParent.GetComponent<RectTransform>().sizeDelta.y + 205f);
+
+        GameObject newMessage = Instantiate(messagePrefab, messageParent);
+        newMessage.GetComponent<RectTransform>().anchoredPosition = new Vector3(-350, 0, 0);
+        messages.Add(newMessage);
+
+        newMessage.GetComponentInChildren<TMP_Text>().text = messageContent;
     }
 
     public void AnsweredCorrectly()

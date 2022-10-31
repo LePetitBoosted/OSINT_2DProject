@@ -63,27 +63,14 @@ public class MessageManager : MonoBehaviour
         currentConversation = conversation;
 
         currentConversation.gameObject.GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0.8f);
-
-        if (currentConversation.answered)
-        {
-            currentConversation.conversationPannel.GetComponentInChildren<TMP_InputField>().interactable = false;
-            currentConversation.conversationPannel.GetComponentInChildren<TMP_InputField>().text = conversation.lastRequest.playerAnswer;
-            currentConversation.conversationPannel.GetComponentInChildren<Button>().interactable = false;
-            currentConversation.conversationPannel.GetComponentInChildren<Button>().gameObject.GetComponentInChildren<TMP_Text>().text = "Sent";
-        }
-        else
-        {
-            currentConversation.conversationPannel.GetComponentInChildren<TMP_InputField>().interactable = true;
-            currentConversation.conversationPannel.GetComponentInChildren<TMP_InputField>().text = "";
-            currentConversation.conversationPannel.GetComponentInChildren<Button>().interactable = true;
-            currentConversation.conversationPannel.GetComponentInChildren<Button>().gameObject.GetComponentInChildren<TMP_Text>().text = "Send";
-        }
     }
 
     public void CheckAnswer(string playerAnswer) 
     {
         currentConversation.answered = true;
         currentConversation.gameObject.GetComponentInChildren<Image>().color = new Color(0.8f, 0.8f, 0.8f, 1f);
+
+        currentConversation.AddPlayerMessage(playerAnswer);
 
         playerAnswer = FormatString(playerAnswer);
 
